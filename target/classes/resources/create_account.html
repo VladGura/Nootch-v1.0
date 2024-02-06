@@ -91,7 +91,7 @@
         }
         .tooltip {
             visibility: hidden;
-            background-color: #333; /* Dark background for tooltip */
+            background-color: #333;
             color: white;
             text-align: center;
             border-radius: 6px;
@@ -101,7 +101,7 @@
             bottom: 100%;
             left: 50%;
             margin-left: -60px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -114,7 +114,7 @@
             margin-left: -5px;
             border-width: 5px;
             border-style: solid;
-            border-color: #333 transparent transparent transparent; /* Arrow color */
+            border-color: #333 transparent transparent transparent;
         }
 
         .show-tooltip {
@@ -156,14 +156,14 @@
             var password = document.forms["registerForm"]["password"].value;
             var confirmPassword = document.forms["registerForm"]["confirmPassword"].value;
 
-            // Email validation (if you implement a custom tooltip for email, use similar logic)
+            // Email validation
             var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
             if (!emailRegex.test(email)) {
                 alert("Please enter a valid email address.");
                 return false;
             }
 
-            // Password confirmation with tooltip
+            // Password confirmation
             var passwordTooltip = document.getElementById("passwordTooltip");
             if (password !== confirmPassword) {
                 passwordTooltip.classList.add("show-tooltip");

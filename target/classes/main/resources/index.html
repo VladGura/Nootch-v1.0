@@ -7,23 +7,77 @@
             font-family: Arial, sans-serif;
             background-image: url('pictures/nucibv4.jpg');
             text-align: center;
-            padding-top: 50px;
+            padding-top: 60px;
             background-size: cover;
-
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            height: 100vh;
+            color: #fff;
         }
         .container {
             background-color: white;
-            width: 300px;
+            width: 350px;
             margin: auto;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 50px;
+            position: relative;
+            transform: translateY(60px);
         }
-        input[type="text"], input[type="password"] {
-            width: 100%;
+        .logo {
+            width: 300px;
+            display: block;
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+        .user-icon {
+            background-image: url('path-to-your-user-icon-image.jpg');
+            background-size: cover;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto;
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+        .sign-in-title {
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0; /* Space above and below the title */
+            font-size: 24px; /* Title size brah */
+        }
+
+        .form-group {
+            position: relative;
+            margin-top: 20px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: calc(100% - 20px);
             padding: 10px;
-            margin: 10px 0;
+            padding-left: 40px; /* room for icon */
             border: 1px solid #ddd;
+            border-radius: 4px;
             box-sizing: border-box;
+        }
+        .form-group i {
+            position: absolute;
+            top: 48%;
+            left: 23px;
+            transform: translateY(-50%);
+            height: 15px;
+            width: 15px;
+            /* useless cred? */
+        }
+        .icon-user i:before {
+            content: url('pictures/user18.png');
+        }
+        .icon-lock i:before {
+            content: url('pictures/lock18.png');
         }
         input[type="submit"] {
             background-color: #4ec26e;
@@ -31,24 +85,44 @@
             padding: 10px;
             width: 100%;
             border: none;
+            border-radius: 4px;
             box-sizing: border-box;
             cursor: pointer;
+            margin-top: 20px;
         }
         input[type="submit"]:hover {
             background-color: #4cae4c;
         }
-        h2 {
+
+        .forgot-password,
+        .create-account {
             color: #333;
+            text-decoration: none;
+            font-size: 0.9em;
+            display: block;
+            margin-top: 10px;
+        }
+        .create-account {
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2>Welcome N!</h2>
+    <img src="pictures/NuciLogov1.jpg" alt="Logo" class="logo">
+    <h2 class="sign-in-title">Sign In</h2>
     <form action="/home" method="post">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <input type="submit" value="Login">
+        <div class="form-group icon-user">
+            <i></i>
+            <input type="text" name="username" placeholder="Username" required>
+        </div>
+        <div class="form-group icon-lock">
+            <i></i>
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+        <input type="submit" value="LOGIN">
+        <a href="/forgot_password.html" class="forgot-password">Forgot Password?</a>
+        <a href="/create_account.html" class="create-account">Don't have an Account yet? Create your Account</a>
     </form>
 </div>
 </body>

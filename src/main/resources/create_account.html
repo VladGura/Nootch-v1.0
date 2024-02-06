@@ -3,7 +3,6 @@
 <head>
     <title>Create Account</title>
     <style>
-        /* Styles will be the same as your login page */
         body {
             font-family: Arial, sans-serif;
             background-image: url('pictures/nucibv4.jpg');
@@ -67,7 +66,7 @@
             content: url('pictures/lock18.png');
         }
         .icon-email i:before {
-            content: url('pictures/email18.png'); /* Add an email icon */
+            content: url('pictures/email18.png');
         }
         input[type="submit"] {
             background-color: #4ec26e;
@@ -90,13 +89,45 @@
             display: block;
             margin-top: 30px;
         }
+        .tooltip {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: black transparent transparent transparent;
+        }
+
+        .show-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <img src="pictures/NuciLogov1.jpg" alt="Logo" class="logo">
     <h2 class="sign-up-title">Create an Account</h2>
-    <form action="/register" method="post">
+    <form name="registerForm" action="/register" method="post" onsubmit="return validateForm()">
         <div class="form-group icon-user">
             <i></i>
             <input type="text" name="username" placeholder="Username" required>
@@ -112,10 +143,38 @@
         <div class="form-group icon-lock">
             <i></i>
             <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+            <span class="tooltip" id="passwordTooltip">Passwords do not match</span>
         </div>
         <input type="submit" value="CREATE ACCOUNT">
         <a href="/" class="login-link">Already have an Account? Log in here</a>
     </form>
 </div>
+
+<script>
+    function validateForm() {
+        var email = document.forms["registerForm"]["email"].value;
+        var password = document.forms["registerForm"]["password"].value;
+        var confirmPassword = document.forms["registerForm"]["confirmPassword"].value;
+
+        // Email validation
+        var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        if (!emailRegex.test(email)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+
+        // Password confirmation with tooltip
+        var passwordTooltip = document.getElementById("passwordTooltip");
+        if (password !== confirmPassword) {
+            passwordTooltip.classList.add("show-tooltip");
+            setTimeout(function() {
+                passwordTooltip.classList.remove("show-tooltip");
+            }, 3000); // Hide tooltip after 3 seconds
+            return false;
+        }
+
+        return true;
+    }
+</script>
 </body>
 </html>

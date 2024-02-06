@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Page</title>
+    <title>Create Account</title>
     <style>
+        /* Styles will be the same as your login page */
         body {
             font-family: Arial, sans-serif;
             background-image: url('pictures/nucibv4.jpg');
@@ -31,35 +32,22 @@
             border-radius: 50%;
             margin: 0 auto;
         }
-        .user-icon {
-            background-image: url('path-to-your-user-icon-image.jpg');
-            background-size: cover;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin: 0 auto;
-            position: absolute;
-            top: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1;
-        }
-        .sign-in-title {
+        .sign-up-title {
             font-weight: bold;
             color: #333;
-            margin: 10px 0; /* Space above and below the title */
-            font-size: 24px; /* Title size brah */
+            margin: 10px 0;
+            font-size: 24px;
         }
-
         .form-group {
             position: relative;
             margin-top: 20px;
         }
         .form-group input[type="text"],
-        .form-group input[type="password"] {
+        .form-group input[type="password"],
+        .form-group input[type="email"] {
             width: calc(100% - 20px);
             padding: 10px;
-            padding-left: 40px; /* room for icon */
+            padding-left: 40px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
@@ -71,13 +59,15 @@
             transform: translateY(-50%);
             height: 15px;
             width: 15px;
-            /* useless cred? */
         }
         .icon-user i:before {
             content: url('pictures/user18.png');
         }
         .icon-lock i:before {
             content: url('pictures/lock18.png');
+        }
+        .icon-email i:before {
+            content: url('pictures/email18.png'); /* Add an email icon */
         }
         input[type="submit"] {
             background-color: #4ec26e;
@@ -93,16 +83,11 @@
         input[type="submit"]:hover {
             background-color: #4cae4c;
         }
-
-        .forgot-password,
-        .create-account {
+        .login-link {
             color: #333;
             text-decoration: none;
             font-size: 0.9em;
             display: block;
-            margin-top: 10px;
-        }
-        .create-account {
             margin-top: 30px;
         }
     </style>
@@ -110,19 +95,26 @@
 <body>
 <div class="container">
     <img src="pictures/NuciLogov1.jpg" alt="Logo" class="logo">
-    <h2 class="sign-in-title">Sign In</h2>
-    <form action="/home" method="post">
+    <h2 class="sign-up-title">Create an Account</h2>
+    <form action="/register" method="post">
         <div class="form-group icon-user">
             <i></i>
             <input type="text" name="username" placeholder="Username" required>
+        </div>
+        <div class="form-group icon-email">
+            <i></i>
+            <input type="email" name="email" placeholder="Email" required>
         </div>
         <div class="form-group icon-lock">
             <i></i>
             <input type="password" name="password" placeholder="Password" required>
         </div>
-        <input type="submit" value="LOGIN">
-        <a href="/forgot_password.html" class="forgot-password">Forgot Password?</a>
-        <a href="/create_account.html" class="create-account">Don't have an Account yet? Create your Account</a>
+        <div class="form-group icon-lock">
+            <i></i>
+            <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+        </div>
+        <input type="submit" value="CREATE ACCOUNT">
+        <a href="/" class="login-link">Already have an Account? Log in here</a>
     </form>
 </div>
 </body>

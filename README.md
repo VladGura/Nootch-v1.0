@@ -6,8 +6,7 @@ Nootch is a social media app that allows you to connect with your friends. It ha
 You can see and share the trending content just with a few clicks.
 
 ## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-//insert nootch icon
+![Nootch Icon](src/main/resources/pictures/NuciLogov1.jpg)
 
 ## Installation
 TBD

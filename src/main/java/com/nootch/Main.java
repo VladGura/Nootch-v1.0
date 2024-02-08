@@ -38,7 +38,7 @@ class Nootch {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody String login(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password) {
         System.out.println(username + " " + password.hashCode());
-        return "Boohoo n-word";
+        return "Boohoohooo";
     }
 
     @GetMapping("/home")

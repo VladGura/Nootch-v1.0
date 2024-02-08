@@ -6,7 +6,7 @@ Nootch is a social media app that allows you to connect with your friends. It ha
 You can see and share the trending content just with a few clicks.
 
 ## Visuals
-![Nootch Icon](src/main/resources/pictures/NuciLogov1.jpg) {width=40%}
+![Nootch Icon](src/main/resources/pictures/NuciLogov1.jpg){width=40%}
 
 ## Installation
 TBD

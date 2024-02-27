@@ -1,4 +1,4 @@
-package com.nootch;
+package com.nootch.controllers;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;

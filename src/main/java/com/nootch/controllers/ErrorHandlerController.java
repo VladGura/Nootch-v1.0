@@ -15,5 +15,4 @@ public class ErrorHandlerController implements ErrorController {
     public RedirectView error() {
         return new RedirectView("/error.html");
     }
-
 }

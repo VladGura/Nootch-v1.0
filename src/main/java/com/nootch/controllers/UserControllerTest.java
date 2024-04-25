@@ -1,7 +1,7 @@
 package com.nootch.controllers;
 
 
-import com.nootch.entities.User;
+import com.nootch.entities.NootchUser;
 import com.nootch.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,22 +19,22 @@ public class UserControllerTest {
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<NootchUser> getAllUsers() {
         return userRepository.findAll();
     }
 
     @PostMapping
-    public User addUser(@RequestBody User user) {
+    public NootchUser addUser(@RequestBody NootchUser user) {
         return userRepository.save(user);
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
+    public NootchUser getUserById(@PathVariable Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+    public NootchUser updateUser(@PathVariable Long id, @RequestBody NootchUser updatedUser) {
         if(userRepository.existsById(id)) {
             updatedUser.setId(id);
             return userRepository.save(updatedUser);

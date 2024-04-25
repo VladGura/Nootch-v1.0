@@ -2,9 +2,107 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nootch Feed</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+        .header {
+            background: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+        .search-bar {
+            flex-grow: 1;
+            margin-right: 20px;
+        }
+        .search-bar input {
+            width: 98%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+        }
+        .profile-button {
+            display: flex;
+            align-items: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            cursor: pointer;
+        }
+        .profile-icon {
+            background: url('pictures/NuciLogov1.jpg') no-repeat center center;
+            background-size: cover;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 25px;
+        }
+        .post-feed {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .post-card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 40%;
+            margin-bottom: 20px;
+        }
+        .post-card img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        .post-content {
+            padding: 15px;
+        }
+        @media (max-width: 768px) {
+            .post-card {
+                width: 90%;
+            }
+        }
+    </style>
 </head>
 <body>
+
+<header class="header">
+    <div class="search-bar">
+        <input type="text" placeholder="Search...">
+    </div>
+    <div class="profile-button">
+        <div class="profile-icon"></div>
+        Profile
+    </div>
+</header>
+
+<main class="post-feed">
+    <!-- Primary featured post -->
+    <div class="post-card">
+        <img src="pictures/memetest1.jpg" alt="Featured Post" class="post-image">
+        <div class="post-content">
+            <p>Description:meme</p>
+        </div>
+    </div>
+    <!-- Other posts -->
+    <!-- Repeat this section for each additional post -->
+    <div class="post-card">
+        <img src="pictures/NuciLogov1.jpg" alt="Post Image" class="post-image">
+        <div class="post-content">
+            <p>Lansarea Nootch: 4.20.2069</p>
+        </div>
+    </div>
+    <!-- End post section -->
+    <!-- Add more post cards here -->
+</main>
 
 </body>
 </html>

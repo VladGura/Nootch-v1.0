@@ -14,7 +14,7 @@ TBD
 
 ## Features
 To do list
-- [ ] create users(role based)
+- [x] create users(role based)
 - [ ] delete user
 - [ ] create post
 - [ ] delete post

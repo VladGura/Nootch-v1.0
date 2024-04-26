@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Create Account</title>
     <style>
@@ -127,7 +128,7 @@
 <div class="container">
     <img src="pictures/NuciLogov1.jpg" alt="Logo" class="logo">
     <h2 class="sign-up-title">Create an Account</h2>
-    <form name="registerForm" action="/register" method="post" onsubmit="return validateForm()">
+    <form name="registerForm" th:action="/register" method="post" onsubmit="return validateForm()">
         <div class="form-group icon-user">
             <i></i>
             <input type="text" name="username" placeholder="Username" required>
@@ -145,12 +146,12 @@
             <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
             <span class="tooltip" id="passwordTooltip">Passwords do not match</span>
         </div>
-        <input type="submit" value="CREATE ACCOUNT">
+        <input id="create_account" type="submit" value="CREATE ACCOUNT">
         <a href="/" class="login-link">Already have an Account? Log in here</a>
     </form>
 </div>
 
-<script>
+<script th:inline="javascript">
         function validateForm() {
             var email = document. forms["registerForm"]["email"].value;
             var password = document. forms["registerForm"]["password"].value;
@@ -175,6 +176,17 @@
 
             return true;
         }
+
+    /*<![CDATA[*/
+    var alert_value = [[${alert}]]; // Get the alert from the server
+    var dataSubmitted = [[${dataSubmitted}]]; // Check if data was submitted
+
+    window.onload = function() {
+        if (dataSubmitted) {
+            alert(alert_value);
+        }
+    };
+    /*]]>*/
     </script>
 </body>
 </html>

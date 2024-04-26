@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Create Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('pictures/nucibv4.jpg');
+            text-align: center;
+            padding-top: 60px;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            height: 100vh;
+            color: #fff;
+        }
+        .container {
+            background-color: white;
+            width: 350px;
+            margin: auto;
+            padding: 20px 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 50px;
+            position: relative;
+            transform: translateY(60px);
+        }
+        .logo {
+            width: 300px;
+            display: block;
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+        .sign-up-title {
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+            font-size: 24px;
+        }
+        .form-group {
+            position: relative;
+            margin-top: 20px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group input[type="email"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            padding-left: 40px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group i {
+            position: absolute;
+            top: 48%;
+            left: 23px;
+            transform: translateY(-50%);
+            height: 15px;
+            width: 15px;
+        }
+        .icon-user i:before {
+            content: url('pictures/user18.png');
+        }
+        .icon-lock i:before {
+            content: url('pictures/lock18.png');
+        }
+        .icon-email i:before {
+            content: url('pictures/email18.png');
+        }
+        input[type="submit"] {
+            background-color: #4ec26e;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 4px;
+            box-sizing: border-box;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        input[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
+        .login-link {
+            color: #333;
+            text-decoration: none;
+            font-size: 0.9em;
+            display: block;
+            margin-top: 30px;
+        }
+        .tooltip {
+            visibility: hidden;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 6px;
+            position: absolute;
+            z-index: 1;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -60px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+
+        .show-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <img src="../pictures/NuciLogov1.jpg" alt="Logo" class="logo">
+    <h2 class="sign-up-title">Create an Account</h2>
+    <form name="registerForm" th:action="@{/register}" method="post" onsubmit="return validateForm()">
+        <div class="form-group icon-user">
+            <i></i>
+            <input type="text" name="username" placeholder="Username" required>
+        </div>
+        <div class="form-group icon-email">
+            <i></i>
+            <input type="email" name="email" placeholder="Email" required>
+        </div>
+        <div class="form-group icon-lock">
+            <i></i>
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+        <div class="form-group icon-lock">
+            <i></i>
+            <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+            <span class="tooltip" id="passwordTooltip">Passwords do not match</span>
+        </div>
+        <input id="create_account" type="submit" value="CREATE ACCOUNT">
+        <a href="/" class="login-link">Already have an Account? Log in here</a>
+    </form>
+</div>
+
+<script th:inline="javascript">
+        function validateForm() {
+            var email = document. forms["registerForm"]["email"].value;
+            var password = document. forms["registerForm"]["password"].value;
+            var confirmPassword = document. forms["registerForm"]["confirmPassword"].value;
+
+            // Email validation
+            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            // Password confirmation
+            var passwordTooltip = document.getElementById("passwordTooltip");
+            if (password !== confirmPassword) {
+                passwordTooltip.classList.add("show-tooltip");
+                setTimeout(function() {
+                    passwordTooltip.classList.remove("show-tooltip");
+                }, 3000); // Hide tooltip after 3 seconds
+                return false;
+            }
+
+            return true;
+        }
+
+    /*<![CDATA[*/
+    var alert_value = [[${alert}]]; // Get the alert from the server
+    var dataSubmitted = [[${dataSubmitted}]]; // Check if data was submitted
+
+    window.onload = function() {
+        if (dataSubmitted) {
+            alert(alert_value);
+        }
+    };
+    /*]]>*/
+    </script>
+</body>
+</html>

@@ -6,7 +6,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('pictures/nucibv4.jpg');
+            background-image: url('nucibv4.jpg');
             text-align: center;
             padding-top: 60px;
             background-size: cover;
@@ -32,19 +32,7 @@
             border-radius: 50%;
             margin: 0 auto;
         }
-        .user-icon {
-            background-image: url('path-to-your-user-icon-image.jpg');
-            background-size: cover;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin: 0 auto;
-            position: absolute;
-            top: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1;
-        }
+
         .sign-in-title {
             font-weight: bold;
             color: #333;
@@ -75,10 +63,10 @@
             /* useless cred? */
         }
         .icon-user i:before {
-            content: url('pictures/user18.png');
+            content: url('user18.png');
         }
         .icon-lock i:before {
-            content: url('pictures/lock18.png');
+            content: url('lock18.png');
         }
         input[type="submit"] {
             background-color: #4ec26e;
@@ -110,7 +98,7 @@
 </head>
 <body>
 <div class="container">
-    <img src="../pictures/NuciLogov1.jpg" alt="Logo" class="logo">
+    <img src="NuciLogov1.jpg" alt="Logo" class="logo">
     <h2 class="sign-in-title">Sign In</h2>
     <form th:action="@{/home}" method="post">
         <div class="form-group icon-user">
@@ -122,8 +110,8 @@
             <input type="password" name="password" placeholder="Password" required>
         </div>
         <input type="submit" value="LOGIN">
-        <a href="/templates/forgot_password.html" class="forgot-password">Forgot Password?</a>
-        <a href="/templates/create_account.html" class="create-account">Don't have an Account yet? Create your Account</a>
+        <a th:href ="@{/forgot_password}" class="forgot-password">Forgot Password?</a>
+        <a th:href ="@{/create_account}" class="create-account">Don't have an Account yet? Create your Account</a>
     </form>
 </div>
 <script th:inline="javascript">

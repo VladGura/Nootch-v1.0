@@ -3,6 +3,7 @@ package com.nootch.controllers;
 
 import com.nootch.entities.NootchUser;
 import com.nootch.repositories.UserRepository;
+import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
@@ -19,11 +20,15 @@ public class NootchController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    ServletContext context;
+
 
     @PostMapping(value = "/register",
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public String register(@RequestParam(name = "username") String username, @RequestParam(name = "email") String email, @RequestParam(name = "password") String password, Model model) {
+    public String register(@RequestParam(name = "username") String username, @RequestParam(name = "email") String email,
+                           @RequestParam(name = "password") String password, Model model) {
 
         NootchUser user = new NootchUser();
         user.setEmail(email);
@@ -62,6 +67,8 @@ public class NootchController {
         }
         else {
             model.addAttribute("profile", username);
+            String absolutePath = context.getRealPath("/");
+            System.out.println(absolutePath);
             return "home";
         }
         return "index";
@@ -70,5 +77,15 @@ public class NootchController {
     @GetMapping("/home")
     public RedirectView homeError() {
         return new RedirectView("/");
+    }
+
+    @GetMapping("/forgot_password")
+    public String forgot_password(){
+        return "forgot_password";
+    }
+
+    @GetMapping("/create_account")
+    public String create_account() {
+        return "create_account";
     }
 }

@@ -12,7 +12,7 @@ public class ErrorHandlerController implements ErrorController {
 
     @RequestMapping("/error")
     @ExceptionHandler(NoHandlerFoundException.class)
-    public RedirectView error() {
-        return new RedirectView("/error.html");
+    public String error() {
+        return "error";
     }
 }

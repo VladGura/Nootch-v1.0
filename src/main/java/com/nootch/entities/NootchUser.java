@@ -1,5 +1,6 @@
 package com.nootch.entities;
 
+import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,5 +21,11 @@ public class NootchUser {
     private long password;
 
     private String email;
+
+    @Nullable
+    private String verificationCode;
+
+    @Nullable
+    private String HttpSessionId; //will fix bugs later
 
 }

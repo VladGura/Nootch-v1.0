@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Error Page</title>
@@ -10,7 +10,7 @@
         }
 
         .background {
-            background-image: url('pictures/error1.jpg');
+            background-image: url('error1.jpg');
             height: 100%;
             background-position: center;
             background-repeat: no-repeat;
@@ -52,7 +52,7 @@
   <div class="message">
     <h1>Oops!</h1>
     <p>It seems like you've found our secret nootching space. This is not the page you are looking for.</p>
-    <p>Let's get you <a href="/">back home</a>.</p>
+    <p>Let's get you <a th:href="@{/}">back home</a>.</p>
   </div>
 </div>
 </body>

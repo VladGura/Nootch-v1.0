@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,9 +36,12 @@
         }
         .profile-button, .profile-icon {
             display: flex;
+            text-decoration: none;
             align-items: center;
             cursor: pointer;
             margin-right: 70px;
+            color: #333;
+            position: relative;
         }
         .profile-icon {
             background: url('Chelutu.jpg') no-repeat center center;
@@ -46,13 +49,34 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            margin-right: 80px;
+            margin-right: 40px;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1000;
+        }
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #ddd;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f5f5f5;
         }
         .app-icon img {
             border-radius: 10px;
             width: 45px;
             height: 45px;
-            margin-right: 115px;
+            margin-right: 170px;
         }
         .post-feed {
             display: flex;
@@ -68,11 +92,29 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             width: 38%;
             margin-bottom: 20px;
+            position: relative;
         }
         .post-card img {
             width: 100%;
             height: auto;
             object-fit: cover;
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: rgba(175,216,214,0.75);
+            border-bottom: 1px solid #ddd;
+        }
+        .post-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .post-header .username {
+            font-weight: bold;
+            color: #333;
         }
         .post-content {
             padding: 15px;
@@ -82,15 +124,126 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 15px;
-            font-size: 90%; /* Adjust font size as necessary */
+            font-size: 90%;
         }
         .likes img {
-            margin-right: 2px; /* Space between icon and text */
+            margin-right: 2px;
         }
         @media (max-width: 768px) {
             .post-card {
                 width: 90%;
             }
+        }
+        /* Floating Create Post Button */
+        .create-post-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 36px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .create-post-button:hover {
+            background-color: #0056b3;
+        }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-group input[type="file"] {
+            padding: 10px 0;
+        }
+        textarea {
+            height: 80px;
+            resize: vertical;
+        }
+        .submit-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+        .image-preview {
+            margin-bottom: 15px;
+            text-align: center;
+            max-height: 200px;
+            overflow: hidden;
+            width: 100%;
+        }
+        .image-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            object-fit: contain;
         }
     </style>
 </head>
@@ -101,20 +254,28 @@
         <input type="text" placeholder="Search...">
     </div>
     <div class="app-icon">
-        <img src="NuciLogov1.jpg" alt="App Icon" style="border-radius: 10px; width: 45px; height: 45px;">
+        <img src="NuciLogov1.jpg" alt="App Icon">
     </div>
-    <div class="profile-button">
+    <div class="profile-button" onclick="toggleDropdown()">
         <div class="profile-icon"></div>
         [[${profile}]]
+        <div class="dropdown-menu" id="dropdownMenu">
+            <a th:href="@{/own_profile}">Profile</a>
+            <a th:href="@{/log_out}">Log Out</a>
+        </div>
     </div>
 </header>
 
 <main class="post-feed">
 
     <div class="post-card">
+        <div class="post-header">
+            <img src="Chelutu.jpg" alt="User Profile">
+            <span class="username">User1</span>
+        </div>
         <img src="NuciLogov1.jpg" alt="Post Image" class="post-image">
         <div class="post-content">
-            <p>Launch event to be anounced!</p>
+            <p>Launch event to be announced!</p>
         </div>
         <div class="post-footer">
             <div class="description">Lansarea Nootch: 4.20.2025</div>
@@ -127,6 +288,10 @@
 
     <!-- Primary featured post -->
     <div class="post-card">
+        <div class="post-header">
+            <img src="Chelutu.jpg" alt="User Profile">
+            <span class="username">User2</span>
+        </div>
         <img src="ps1.jpg" alt="Featured Post" class="post-image">
         <div class="post-content">
             <p>Bucharest view</p>
@@ -141,8 +306,11 @@
     </div>
     <!-- Other posts -->
 
-
     <div class="post-card">
+        <div class="post-header">
+            <img src="Chelutu.jpg" alt="User Profile">
+            <span class="username">User3</span>
+        </div>
         <img src="ps5.gif" alt="Featured Post" class="post-image">
         <div class="post-content">
             <p>Ski</p>
@@ -157,6 +325,10 @@
     </div>
 
     <div class="post-card">
+        <div class="post-header">
+            <img src="Chelutu.jpg" alt="User Profile">
+            <span class="username">User4</span>
+        </div>
         <img src="ps3.jpg" alt="Featured Post" class="post-image">
         <div class="post-content">
             <p>Doggo</p>
@@ -171,6 +343,10 @@
     </div>
 
     <div class="post-card">
+        <div class="post-header">
+            <img src="Chelutu.jpg" alt="User Profile">
+            <span class="username">User5</span>
+        </div>
         <img src="ps4.jpg" alt="Featured Post" class="post-image">
         <div class="post-content">
             <p>FTC News</p>
@@ -185,6 +361,10 @@
     </div>
 
     <div class="post-card">
+        <div class="post-header">
+            <img src="Chelutu.jpg" alt="User Profile">
+            <span class="username">User6</span>
+        </div>
         <img src="ps2.jpg" alt="Featured Post" class="post-image">
         <div class="post-content">
             <p>Crypto Market</p>
@@ -199,6 +379,114 @@
     </div>
     <!-- End post section -->
 </main>
+
+<!-- Floating Create Post Button -->
+<button class="create-post-button" id="createPostBtn">+</button>
+
+<!-- The Modal -->
+<div id="createPostModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h2>Create a Post</h2>
+        <form id="postForm">
+            <div class="image-preview" id="imagePreview">
+                <img src="" alt="Image Preview" class="image-preview__image" style="display: none;">
+                <span class="image-preview__default-text">Image Preview</span>
+            </div>
+            <div class="form-group">
+                <label for="postTitle">Title</label>
+                <input type="text" id="postTitle" name="postTitle" placeholder="Enter post title" required>
+            </div>
+            <div class="form-group">
+                <label for="postContent">Content</label>
+                <textarea id="postContent" name="postContent" placeholder="What's on your mind?" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="postImage">Upload Image</label>
+                <input type="file" id="postImage" name="postImage" accept="image/*">
+            </div>
+            <button type="submit" class="submit-button">Post</button>
+        </form>
+    </div>
+</div>
+
+<script>
+  // Get the modal
+  var modal = document.getElementById("createPostModal");
+
+  // Get the button that opens the modal
+  var btn = document.getElementById("createPostBtn");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementById("closeModal");
+
+  // When the user clicks the button, open the modal
+  btn.onclick = function() {
+    modal.style.display = "flex";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  // Image preview functionality
+  const postImage = document.getElementById("postImage");
+  const imagePreview = document.getElementById("imagePreview");
+  const imagePreviewImage = imagePreview.querySelector(".image-preview__image");
+  const imagePreviewDefaultText = imagePreview.querySelector(".image-preview__default-text");
+
+  postImage.addEventListener("change", function() {
+    const file = this.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      imagePreviewDefaultText.style.display = "none";
+      imagePreviewImage.style.display = "block";
+
+      reader.addEventListener("load", function() {
+        imagePreviewImage.setAttribute("src", this.result);
+      });
+
+      reader.readAsDataURL(file);
+    } else {
+      imagePreviewDefaultText.style.display = null;
+      imagePreviewImage.style.display = null;
+      imagePreviewImage.setAttribute("src", "");
+    }
+  });
+
+  // Dropdown menu functionality
+  function toggleDropdown() {
+    var dropdownMenu = document.getElementById("dropdownMenu");
+    if (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") {
+      dropdownMenu.style.display = "block";
+    } else {
+      dropdownMenu.style.display = "none";
+    }
+  }
+
+  // Close the dropdown menu if the user clicks outside of it
+  window.onclick = function(event) {
+    if (!event.target.matches('.profile-button')) {
+      var dropdowns = document.getElementsByClassName("dropdown-menu");
+      for (var i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.style.display === "block") {
+          openDropdown.style.display = "none";
+        }
+      }
+    }
+  }
+</script>
 
 </body>
 </html>

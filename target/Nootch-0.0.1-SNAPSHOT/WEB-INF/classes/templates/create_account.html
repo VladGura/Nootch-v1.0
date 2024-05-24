@@ -6,7 +6,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('../pictures/nucibv4.jpg');
+            background-image: url('nucibv4.jpg');
             text-align: center;
             padding-top: 60px;
             background-size: cover;
@@ -61,13 +61,13 @@
             width: 15px;
         }
         .icon-user i:before {
-            content: url('../pictures/user18.png');
+            content: url('user18.png');
         }
         .icon-lock i:before {
-            content: url('../pictures/lock18.png');
+            content: url('lock18.png');
         }
         .icon-email i:before {
-            content: url('../pictures/email18.png');
+            content: url('email18.png');
         }
         input[type="submit"] {
             background-color: #4ec26e;
@@ -126,7 +126,7 @@
 </head>
 <body>
 <div class="container">
-    <img src="../pictures/NuciLogov1.jpg" alt="Logo" class="logo">
+    <img src="NuciLogov1.jpg" alt="Logo" class="logo">
     <h2 class="sign-up-title">Create an Account</h2>
     <form name="registerForm" th:action="@{/register}" method="post" onsubmit="return validateForm()">
         <div class="form-group icon-user">
@@ -147,7 +147,7 @@
             <span class="tooltip" id="passwordTooltip">Passwords do not match</span>
         </div>
         <input id="create_account" type="submit" value="CREATE ACCOUNT">
-        <a href="/" class="login-link">Already have an Account? Log in here</a>
+        <a th:href="@{/}" class="login-link">Already have an Account? Log in here</a>
     </form>
 </div>
 

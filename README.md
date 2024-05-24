@@ -41,7 +41,11 @@ To do list
 Adding group chat with server functionality and a popularity based promotion algorithm for your posts in future updates!
 
 ## Authors and acknowledgment
-Shout out to Mark Erena and Vlad Gura!
+In this project, the collaborative efforts of Mark Erena and Vlad Gura were instrumental in its success. Mark Erena took charge of the backend development, ensuring robust and efficient server-side operations, database management, and API integrations. His expertise in backend technologies facilitated seamless data handling and secured user interactions.
+
+On the other hand, Vlad Gura focused on the frontend development, crafting an intuitive and visually appealing user interface. He utilized his skills in HTML, CSS, and JavaScript to create a responsive design that ensures a smooth user experience across various devices. Vlad's work on the front end brought the project's vision to life, making it accessible and engaging for users.
+
+Together, Mark and Vlad's contributions resulted in a well-rounded and fully functional application, showcasing the power of effective teamwork and specialization.
 
 ## Project status
 Project set up and initialized

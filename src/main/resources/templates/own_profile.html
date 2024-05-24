@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nootch - Profile</title>
+  <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('homepv2.jpg');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .profile-pic {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+
+        .profile-pic input {
+            display: none;
+        }
+
+        .profile-pic img {
+            object-fit: cover;
+            width: 100px;
+            height: 100px;
+            box-shadow: 0 0 10px 0 rgba(255,255,255,.35);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .profile-pic label {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .profile-pic:hover label {
+            display: flex;
+        }
+
+        .profile-info {
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        .profile-info h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .profile-stats div {
+            text-align: center;
+        }
+
+        .profile-stats div span {
+            display: block;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .create-post-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-right: 20px;
+        }
+
+        .create-post-button:hover {
+            background-color: #0056b3;
+        }
+
+        .posts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .post {
+            background-color: white;
+            position: relative;
+            width: calc(33.333% - 10px);
+            padding-top: 33.333%; /* 1:1 Aspect Ratio */
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .post img {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .post-title {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 1em;
+            color: #007BFF;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 5px 0;
+            display: none; /* Hidden but kept in the HTML structure */
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-group input[type="file"] {
+            padding: 10px 0;
+        }
+
+        textarea {
+            height: 80px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        .image-preview {
+            margin-bottom: 15px;
+            text-align: center;
+            max-height: 200px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        @media (max-width: 600px) {
+            .posts {
+                display: block;
+            }
+
+            .post {
+                width: 100%;
+                margin-bottom: 10px;
+                padding-top: 100%; /* 1:1 Aspect Ratio for smaller screens */
+            }
+        }
+
+        /* Floating button for going home */
+        .floating-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 36px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .floating-button:hover {
+            background-color: #0056b3;
+        }
+
+        .floating-button::before {
+            content: '\2190';
+            font-size: 24px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+  <div class="profile-header">
+    <form th:action="@{/updateProfilePic}" method="post" enctype="multipart/form-data" style="display: flex; align-items: center; flex-grow: 1;">
+      <div class="profile-pic">
+        <label class="-label" for="file">
+          <span class="glyphicon glyphicon-camera"></span>
+          <span>Change</span>
+        </label>
+        <input id="file" type="file" name="profilePicture" onchange="loadFile(event)"/>
+        <img src="Chelutu.jpg" id="output" alt="Profile Image">
+      </div>
+      <div class="profile-info">
+        <h2>[[${username}]]</h2>
+        <div class="profile-stats">
+          <div>
+            <span>3</span>
+            Posts
+          </div>
+          <div>
+            <span>423</span>
+            Nootchers
+          </div>
+          <div>
+            <span>79</span>
+            Nootching
+          </div>
+        </div>
+      </div>
+      <!-- Update Profile Picture button -->
+      <button type="submit" class="create-post-button" id="updateProfileBtn" style="display:none; margin: 0 20px;">Update Profile Picture</button>
+    </form>
+    <button class="create-post-button" id="createPostBtn">Create Post</button>
+  </div>
+  <div class="posts">
+    <div class="post" data-post-id="1">
+      <img src="ps3.jpg" alt="Post Image 1">
+      <div class="post-title">Post ID 1</div>
+    </div>
+    <div class="post" data-post-id="2">
+      <img src="ps4.jpg" alt="Post Image 2">
+      <div class="post-title">Post ID 2</div>
+    </div>
+    <div class="post" data-post-id="3">
+      <img src="ps1.jpg" alt="Post Image 3">
+      <div class="post-title">Post ID 3</div>
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div id="createPostModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <h2>Create a Post</h2>
+    <form id="postForm">
+      <div class="image-preview" id="imagePreview">
+        <img src="" alt="Image Preview" class="image-preview__image" style="display: none;">
+        <span class="image-preview__default-text">Image Preview</span>
+      </div>
+      <div class="form-group">
+        <label for="postTitle">Title</label>
+        <input type="text" id="postTitle" name="postTitle" placeholder="Enter post title" required>
+      </div>
+      <div class="form-group">
+        <label for="postContent">Content</label>
+        <textarea id="postContent" name="postContent" placeholder="What's on your mind?" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="postImage">Upload Image</label>
+        <input type="file" id="postImage" name="postImage" accept="image/*">
+      </div>
+      <button type="submit" class="submit-button">Post</button>
+    </form>
+  </div>
+</div>
+
+<!-- Floating button -->
+<button class="floating-button" onclick="window.location.href='home';"></button>
+
+<script>
+  // Get the modal
+  var modal = document.getElementById("createPostModal");
+
+  // Get the button that opens the modal
+  var btn = document.getElementById("createPostBtn");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementById("closeModal");
+
+  // When the user clicks the button, open the modal
+  btn.onclick = function() {
+    modal.style.display = "flex";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  // Image preview functionality
+  const postImage = document.getElementById("postImage");
+  const imagePreview = document.getElementById("imagePreview");
+  const imagePreviewImage = imagePreview.querySelector(".image-preview__image");
+  const imagePreviewDefaultText = imagePreview.querySelector(".image-preview__default-text");
+
+  postImage.addEventListener("change", function() {
+    const file = this.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      imagePreviewDefaultText.style.display = "none";
+      imagePreviewImage.style.display = "block";
+
+      reader.addEventListener("load", function() {
+        imagePreviewImage.setAttribute("src", this.result);
+      });
+
+      reader.readAsDataURL(file);
+    } else {
+      imagePreviewDefaultText.style.display = null;
+      imagePreviewImage.style.display = null;
+      imagePreviewImage.setAttribute("src", "");
+    }
+  });
+
+  // Load file for profile picture preview
+  var loadFile = function (event) {
+    var image = document.getElementById("output");
+<<<<<<< HEAD
+    var reader = new FileReader();
+    reader.onload = function() {
+      image.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+    document.getElementById("updateProfileBtn").style.display = "inline-block";
+  };
+
+  // Show update button on profile picture change
+  function showUpdateButton(event) {
+    var updateButton = document.getElementById("updateProfileBtn");
+    updateButton.style.display = "inline-block";
+  }
+=======
+    image.src = URL.createObjectURL(event.target.files[0]);
+  };
+>>>>>>> 9773a305dab1cf02a9b73d2ebf39982fac061270
+</script>
+</body>
+</html>
